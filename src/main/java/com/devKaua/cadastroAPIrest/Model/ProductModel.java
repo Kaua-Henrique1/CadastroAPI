@@ -2,13 +2,14 @@ package com.devKaua.cadastroAPIrest.Model;
 
 import jakarta.persistence.*;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.UUID;
 
 // Ele transforma uma class em uma entidade para o banco de dados
 @Entity
 @Table(name = "tb_product")
-public class ProductModel {
+public class ProductModel implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id

@@ -10,17 +10,18 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping
 public class ProductController {
     @Autowired
-    ProductController productController;
-    @Autowired
     private ProductRepository productRepository;
 
-    @PostMapping("/products")
+    @PostMapping("/products")                      //             AQUI ELE FAZ AS VALIDACOES ESCRITOS NO Dto
     public ResponseEntity<ProductModel> saveProduct(@RequestBody @Valid ProductRecordDto productRecordDto) {
-        var productModel = new ProductModel();
+        ProductModel productModel = new ProductModel();
+                              // Ele recebe Dto.   Converte para productModel.
         BeanUtils.copyProperties(productRecordDto, productModel);
         return ResponseEntity.status(HttpStatus.CREATED).body(productRepository.save(productModel));
     }
@@ -28,5 +29,10 @@ public class ProductController {
     @GetMapping("/boasvindas")
     public String boasVindas() {
         return "Primeira rota";
+    }
+
+    @GetMapping("/products")
+    public ResponseEntity<List<ProductModel>> getAllProducts() {
+        return ResponseEntity.status(HttpStatus.OK).body(productRepository.findAll());
     }
 }
